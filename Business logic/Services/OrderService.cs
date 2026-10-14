@@ -6,6 +6,8 @@ public class OrderService(OrderStorage orderStorage)
     {
         Order order = new(idCounter++, request.ProductName, request.CustomerName, request.Description);
 
+        orderStorage.Add(order);
+
         return Result<Order>.Success(order);
     }
 
