@@ -22,7 +22,7 @@ public class OrdersController(OrderService orderService) : ControllerBase
 
         if (result.IsFailure) return BadRequest(result.ErrorMessage);
 
-        var order = result.Value ?? throw new ArgumentNullException();
+        var order = result.Value!;
 
         var response = new OrderResponse(order);
 
@@ -30,12 +30,12 @@ public class OrdersController(OrderService orderService) : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
-    public Results<Ok, NotFound<string>> Delete(int id)
+    public Results<NoContent, NotFound<string>> Delete(int id)
     {
         var result = orderService.Remove(id);
 
         if (result.IsFailure) return TypedResults.NotFound(result.ErrorMessage);
 
-        return TypedResults.Ok();
+        return TypedResults.NoContent();
     }
 }
