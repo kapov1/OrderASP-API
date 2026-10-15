@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 public class CustomerNameAttribute : ValidationAttribute
 {
-    private readonly string invalidChars = """ !\"#$%&'()*+,/:;<=>?@[\\]^`{|}~""";
+    private readonly string invalidChars = """!\"#$%&'()*+,/:;<=>?@[\\]^`{|}~""";
 
     protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
     {
