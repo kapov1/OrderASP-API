@@ -18,7 +18,8 @@ public class OrdersController(OrderService orderService) : ControllerBase
     [HttpPost]
     public ActionResult<OrderResponse> Create([FromBody] OrderCreateRequest request)
     {
-        Result<Order> result = orderService.Add(request);
+        Result<Order> result = (Result<Order>)orderService.Add(request);
+
         if (result.IsFailure) return BadRequest("Order with this id doesn't exist");
 
         var order = result.Value ?? throw new ArgumentNullException();
@@ -31,7 +32,7 @@ public class OrdersController(OrderService orderService) : ControllerBase
     [HttpDelete("{id:int}")]
     public Results<Ok, NotFound<string>> Delete(int id)
     {
-        var result = orderService.Remove(id);
+        var result = (Result)orderService.Remove(id);
 
         if (result.IsFailure) return TypedResults.NotFound("Order with this id doesn't exist");
 
