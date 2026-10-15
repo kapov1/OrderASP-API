@@ -2,18 +2,18 @@ public class OrderService(OrderStorage orderStorage)
 {
     private static uint idCounter = 1; // идея с ID нелючшая но это просто чтобы не парится
 
-    public IOperationResult Add(OrderCreateRequest request)
+    public Result<Order> Add(OrderCreateRequest request)
     {
         Order order = new(idCounter++, request.ProductName, request.CustomerName, request.Description);
 
-        if (orderStorage.Orders.Any(order_ => order_.Id == order.Id)) return Result.Failure("Order with this ID already exist");
+        if (orderStorage.Orders.Any(order_ => order_.Id == order.Id)) return Result<Order>.Failure("Order with this ID already exist");
 
         orderStorage.Add(order);
 
         return Result<Order>.Success(order);
     }
 
-    public IOperationResult Remove(int id)
+    public Result Remove(int id)
     {
         if (!orderStorage.Orders.Any(order => order.Id == id)) return Result.Failure("This order is not in the storage.");
 
