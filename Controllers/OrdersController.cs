@@ -18,7 +18,7 @@ public class OrdersController(OrderService orderService) : ControllerBase
     [HttpPost]
     public ActionResult<OrderResponse> Create([FromBody] OrderCreateRequest request)
     {
-        Result<Order> result = (Result<Order>)orderService.Add(request);
+        var result = (Result<Order>)orderService.Add(request);
 
         if (result.IsFailure) return BadRequest("Order with this id doesn't exist");
 
